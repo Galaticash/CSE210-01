@@ -1,0 +1,14 @@
+Hello! This is a test to use git commit in command line to upload files to Github
+I don't think it's working? Not appearing on Github
+Hmm third times the charm? Use git init?
+
+Okay so replaced the git files. Correct order:
+
+git clone (remote repository)
+
+Adding Files, making commits "snapshots"
+git add (specific files) - adds file to the commit
+git commit - creates the commit on the LOCAL repository
+
+git push - Updates REMOTE repository to match the LOCAL repository
+
