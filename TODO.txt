@@ -14,3 +14,6 @@ git push - Updates REMOTE repository to match the LOCAL repository
 
 Multiple commits can be kept on the local machine and then finally pushed together
 Now testing updating the local when remote changes are made.
+
+Use git fetch to see changes in remote
+Then use git pull to update the local repository
