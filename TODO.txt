@@ -12,3 +12,5 @@ git commit - creates the commit on the LOCAL repository
 
 git push - Updates REMOTE repository to match the LOCAL repository
 
+Multiple commits can be kept on the local machine and then finally pushed together
+Now testing updating the local when remote changes are made.
