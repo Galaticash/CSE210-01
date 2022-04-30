@@ -29,27 +29,27 @@ GRID_RANGE = (1, 100)
 
 def main():
 
-    # Moved constants inside of main so grid size can be decided by the user
+    # Moved constants inside of main so grid size can be decided by the user.
     GRID_SIZE = get_valid_input("Please enter a grid size. Will create an X by X board", GRID_RANGE)
 
-    # Create constants from the current grid size
+    # Create constants from the current grid size.
     GRID_NUM_TENS = find_tens_place(GRID_SIZE**2)
     LINE_SEPARATOR = create_horizontal_line(GRID_SIZE, GRID_NUM_TENS)
     ENTRY_SEPARATOR = "|"
 
-    # Assign the grid values and print the grid
-    # grid values are 1 more than the indexes
+    # Assign the grid values and print the grid.
+    # (grid values are 1 more than the indexes)
     grid_values = list(range(1, (GRID_SIZE**2) + 1))
     print_grid(grid_values, GRID_NUM_TENS, LINE_SEPARATOR, ENTRY_SEPARATOR)
 
-    # Continue the game until it is over
+    # Continue the game until it is over.
     game_over = False
-    # Player x will go first
+    # Player x will go first.
     current_player = PLAYER_X
-    # Turn counter, if all moves played w/o winner, draw
+    # Turn counter, if all moves are played without a win, game is a draw.
     num_turn = 0
 
-    # While the game has not finished
+    # While the game has not finished,
     while not game_over:
         # Count the number of turns
         num_turn += 1
@@ -79,13 +79,18 @@ def main():
         else:
             # There is no winner, change to the next player.
             # Uses ternary operator based on previous current_player (last_player)
-            current_player = PLAYER_O if current_player == PLAYER_X else PLAYER_X
+            current_player = (PLAYER_O if current_player == PLAYER_X else PLAYER_X)
 
-    # TODO: Have winner bool/winning moves displayed here
+    # End message for the game
     print("Good game. Thanks for playing!")
 
 
 def get_valid_input(message, num_range):
+    """ Given a message (string) and a range of values (int)
+         will repeatedly ask the user for an integer within
+         the range until a vaild choice is made.
+        Returns user's input (integer)
+    """
     valid_input = False
     # While the input is not an int or within the range,
     while not valid_input:
@@ -104,31 +109,46 @@ def get_valid_input(message, num_range):
         except:
             print("An unexpected error has occured.")
 
-
-# Finds the number of tens places in an integer
-# Used to adjust spacing for larger grids
 def find_tens_place(find_tens):
+    """ Returns the number of tens places (int)
+         that a given value (int) has
+    """
+    # Finds the number of tens places in an integer
+    # Used to adjust spacing for larger grids
     count = 0
     while find_tens > 9:        
         find_tens = find_tens//10
         count += 1
     return count
 
-# Grid lines and spacing will adjust based on the grid size
-# Line size changes based on how many digits the largest number has
 def create_horizontal_line(grid_length, grid_num_tens):
+    """ Creates the string that will separate grid rows
+         given the size/length of the grid (integer) and 
+         the number of tens places the largest value in
+         the grid has.
+        Returns the horizontal line separator (string)
+    """
+    # Grid lines and spacing will adjust based on the grid size
+    # Line size changes based on how many digits the largest number has
+    # Initialize variables
     line_separator_string = ""
     dashes = "-"
+    # Adds extra dashes for every tens place.
     for tens in range(grid_num_tens):
         dashes += "-"
+    # Adds the '--+' string to represent rows
+    #  and column intersections.
     for entries in range(grid_length - 1):
         line_separator_string += dashes + "+"
+    # Adds dashes and a newline to end the grid
     line_separator_string += dashes + "\n"
     return line_separator_string
 
-# TODO: Look up proper commenting of function
 def get_valid_move(current_player, grid_values):
-
+    """ Gets a valid user-inputed tictactoe move for
+         the given grid. Disallows repeated moves.
+        Returns user_input (integer)
+    """
     # Initialize variables
     user_input = -1
     unique_choice = False
@@ -154,8 +174,16 @@ def get_valid_move(current_player, grid_values):
     return user_input
 
 def print_grid(grid_values, grid_num_tens, horizonal_separator, entry_separator):
+    """ Prints the tic-tac-toe grid for the given grid values (list of ints/chars),
+         number of tens places the largest number in the grid has (integer),
+         a horizontal separator (string) to print between lines, and
+         an entry separator to place between entries on the same row.
+        Returns nothing (null)
+    """
     # Grid length is square root of the length
     grid_length = len(grid_values)**(1/2)
+
+    # TODO: Clear/refresh console
 
     # if between 0 and 9 (not including 9)
     for index in range(0, len(grid_values)):
@@ -193,6 +221,12 @@ def print_grid(grid_values, grid_num_tens, horizonal_separator, entry_separator)
             print("\n")
 
 def check_winner(current_player, grid_values):
+    """ Checks if there is a winner for the tic-tac-toe
+         game given the last player to place a piece (char),
+         and the values on the grid (list of ints/chars)
+        Returns winning_combo (list of ints) that led to the win
+    """
+    
     # Initialize a counter for player peices in a row.
     count = 0
     winning_combo = []
